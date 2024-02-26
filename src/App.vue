@@ -1,7 +1,7 @@
 <template>
   <Moneybox :money="money"/>
   <Table :playedTokens="playedTokens" :playedMoney="playedMoney"/>
-  <Menu @addToken="addToken"/>
+  <Menu :playedMoney="playedMoney" :game="game" @clear="clear" @deal="deal" @addToken="addToken"/>
 </template>
 
 <script>
@@ -21,7 +21,8 @@ export default {
       usedCards: [],
       money: 1000,
       playedMoney: 0,
-      playedTokens: []
+      playedTokens: [],
+      game: false
     }
   },
   methods:{
@@ -36,6 +37,14 @@ export default {
         token.left = `${this.getRandom(-5, 5)}%`
         this.playedTokens.push(token)
       }
+    },
+    clear(){
+      this.money += this.playedMoney
+      this.playedMoney = 0
+      this.playedTokens = []
+    },
+    deal(){
+      this.game = true
     }
   }
 }

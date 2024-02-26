@@ -3,12 +3,17 @@
         <div id="tokens">
             <div v-for="token in tokens" :style="{background: token.color}" @click="addToken(token)">{{ token.value }}</div>
         </div>
+        <div id="buttons" v-if="playedMoney && !game">
+            <button name="clear" @click="clear">Clear</button>
+            <button name="deal" @click="deal">Deal</button>
+        </div>
     </div>
 </template>
 
 <script>
 export default{
     name: 'Menu',
+    props: ['playedMoney', 'game'],
     data(){
         return{
             tokens:[
@@ -24,6 +29,12 @@ export default{
     methods:{
         addToken(token){
             this.$emit("addToken", token)
+        },
+        clear(){
+            this.$emit("clear")
+        },
+        deal(){
+            this.$emit("deal")
         }
     }
 }
@@ -36,8 +47,10 @@ $transition: .2s all ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 15px;
     margin-top: 8px;
 }
+
 #tokens{
     display: flex;
     justify-content: center;
@@ -55,6 +68,27 @@ $transition: .2s all ease-in-out;
         height: 80px;
         border-radius: 40px;
         user-select: none;
+        transition: $transition;
+        &:hover{
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+    }
+}
+
+#buttons{
+    display: flex;
+    gap: 10px;
+    button{
+        width: 100px;
+        height: 60px;
+        background: #755a27;
+        border: none;
+        outline: 5px dashed white;
+        outline-offset: -10px;
+        border-radius: 15px;
+        color: white;
+        font-size: 1.4rem;
         transition: $transition;
         &:hover{
             transform: translateY(-5px);

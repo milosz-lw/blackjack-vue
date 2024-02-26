@@ -2,9 +2,12 @@
     <div id="playedtokens">
         <div v-for="token in tokens" :style="{background: token.color, top: token.top, left: token.left}">{{ token.value }}</div>
     </div>
-    <div id="playedmoney">
+    <div v-if="playedMoney" class="playedmoney" style="bottom: .5%">
         <p>{{ playedMoney }}</p>
         <img src="../assets/coin.png">        
+    </div>
+    <div v-else class="playedmoney" style="bottom: 5%">
+        <h1>Place your bet</h1>
     </div>
 </template>
 
@@ -63,7 +66,7 @@ export default{
     }
 }
 
-#playedmoney{
+.playedmoney{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,7 +76,6 @@ export default{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: .5%;
     height: 25px;
 }
 </style>
