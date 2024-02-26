@@ -1,6 +1,6 @@
 <template>
     <div id="table">
-        <Playedtokens :tokens="playedTokens"/>
+        <Playedtokens :tokens="playedTokens" :playedMoney="playedMoney"/>
     </div>
 </template>
 
@@ -9,8 +9,8 @@ import Playedtokens from './Playedtokens.vue';
 
 export default{
     name: 'Table',
-    components: {Playedtokens},
-    props: ["playedTokens"]
+    components: { Playedtokens },
+    props: ['playedTokens', 'playedMoney']
 }
 </script>
 

@@ -2,12 +2,16 @@
     <div id="playedtokens">
         <div v-for="token in tokens" :style="{background: token.color, top: token.top, left: token.left}">{{ token.value }}</div>
     </div>
+    <div id="playedmoney">
+        <p>{{ playedMoney }}</p>
+        <img src="../assets/coin.png">        
+    </div>
 </template>
 
 <script>
 export default{
     name: "Playedtokens",
-    props: ['tokens']
+    props: ['tokens', 'playedMoney']
 }
 </script>
 
@@ -24,6 +28,12 @@ export default{
 }
 
 #playedtokens{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+    font-size: 1.3rem;
     position: absolute;
     left: 50%;
     bottom: 5%;
@@ -46,5 +56,24 @@ export default{
         user-select: none;
         animation: tokenAppear .5s;
     }
+    p{
+        position: absolute;
+        margin: 0;
+        bottom: -40%;
+    }
+}
+
+#playedmoney{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.3rem;
+    color: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: .5%;
+    height: 25px;
 }
 </style>

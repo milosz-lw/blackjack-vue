@@ -1,6 +1,6 @@
 <template>
   <Moneybox :money="money"/>
-  <Table :playedTokens="playedTokens"/>
+  <Table :playedTokens="playedTokens" :playedMoney="playedMoney"/>
   <Menu @addToken="addToken"/>
 </template>
 
