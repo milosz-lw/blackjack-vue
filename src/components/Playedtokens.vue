@@ -1,0 +1,50 @@
+<template>
+    <div id="playedtokens">
+        <div v-for="token in tokens" :style="{background: token.color, top: token.top, left: token.left}">{{ token.value }}</div>
+    </div>
+</template>
+
+<script>
+export default{
+    name: "Playedtokens",
+    props: ['tokens']
+}
+</script>
+
+<style lang="scss">
+@keyframes tokenAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#playedtokens{
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    z-index: 500;
+    width: 80px;
+    height: 80px;
+    transform: translateX(-50%);
+    div{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 2rem;
+        outline: 5px dashed white;
+        outline-offset: -10px;
+        width: 80px;
+        height: 80px;
+        border-radius: 40px;
+        user-select: none;
+        animation: tokenAppear .5s;
+    }
+}
+</style>

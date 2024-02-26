@@ -14,6 +14,7 @@ export default{
 
 <style lang="scss">
 #moneybox{
+    z-index: 5000;
     display: flex;
     justify-content: center;
     position: absolute;

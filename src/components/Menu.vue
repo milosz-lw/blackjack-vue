@@ -1,7 +1,7 @@
 <template>
     <div id="menu">
         <div id="tokens">
-            <div v-for="token in tokens" :style="{background: token.color}">{{ token.value }}</div>
+            <div v-for="token in tokens" :style="{background: token.color}" @click="addToken(token)">{{ token.value }}</div>
         </div>
     </div>
 </template>
@@ -20,6 +20,11 @@ export default{
                 {value: 500, color: '#781DD3'}
             ]
         }
+    },
+    methods:{
+        addToken(token){
+            this.$emit("addToken", token)
+        }
     }
 }
 </script>
@@ -28,12 +33,14 @@ export default{
 $transition: .2s all ease-in-out;
 
 #menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 8px;
 }
 #tokens{
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
     gap: 5px;
     div{
