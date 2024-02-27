@@ -1,6 +1,6 @@
 <template>
   <Moneybox :money="money"/>
-  <Table :playedTokens="playedTokens" :playedMoney="playedMoney"/>
+  <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :playerHand="playerHand" :opponentHand="opponentHand"/>
   <Menu :playedMoney="playedMoney" :game="game" @clear="clear" @deal="deal" @addToken="addToken"/>
 </template>
 
@@ -22,7 +22,9 @@ export default {
       money: 1000,
       playedMoney: 0,
       playedTokens: [],
-      game: false
+      game: false,
+      playerHand: [],
+      opponentHand: []
     }
   },
   methods:{
@@ -38,6 +40,11 @@ export default {
         this.playedTokens.push(token)
       }
     },
+    drawCard(hand){
+      let randPos = this.getRandom(0, this.cards.length - 1)
+      hand.push(this.cards[randPos])
+      this.cards.splice(randPos, 1)
+    },
     clear(){
       this.money += this.playedMoney
       this.playedMoney = 0
@@ -45,6 +52,7 @@ export default {
     },
     deal(){
       this.game = true
+      this.drawCard(this.playerHand)
     }
   }
 }
