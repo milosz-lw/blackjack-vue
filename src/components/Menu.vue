@@ -28,7 +28,9 @@ export default{
     },
     methods:{
         addToken(token){
-            this.$emit("addToken", token)
+            if(!this.game){
+                this.$emit("addToken", token)
+            }
         },
         clear(){
             this.$emit("clear")
