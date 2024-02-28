@@ -21,6 +21,10 @@ export default{
 #table{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding-bottom: 140px;
+    padding-top: 60px;
     align-items: center;
     background: #23581c;
     position: relative;

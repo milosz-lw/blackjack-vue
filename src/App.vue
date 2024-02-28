@@ -41,9 +41,11 @@ export default {
       }
     },
     drawCard(hand){
-      let randPos = this.getRandom(0, this.cards.length - 1)
-      hand.push(this.cards[randPos])
-      this.cards.splice(randPos, 1)
+      setTimeout(() => {
+        let randPos = this.getRandom(0, this.cards.length - 1)
+        hand.push(this.cards[randPos])
+        this.cards.splice(randPos, 1)
+      }, 500)
     },
     clear(){
       this.money += this.playedMoney
@@ -53,6 +55,9 @@ export default {
     deal(){
       this.game = true
       this.drawCard(this.playerHand)
+      setTimeout(()=>{this.drawCard(this.opponentHand)}, 500)
+      setTimeout(()=>{this.drawCard(this.playerHand)}, 1000)
+      setTimeout(()=>{this.drawCard(this.opponentHand)}, 1500)
     }
   }
 }
