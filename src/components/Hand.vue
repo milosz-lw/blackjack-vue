@@ -6,7 +6,7 @@
                 <img :src="require('../assets/' + card.suit + '.png')">
                 <p style="text-align: right;">{{ card.num }}</p>
             </div>
-            <div class="back hidden">
+            <div class="back">
             </div>
         </div>
     </div>
@@ -33,13 +33,16 @@ export default{
 
 .hand{
     display: flex;
+    user-select: none;
     > div{
         width: 100px;
         height: 150px;
+        margin-left: -15px;
         background: white;
         animation: cardAppear .5s;
         transform: rotate(3deg);
-        box-shadow: rgba(255, 255, 255, .5) 0 0 20px;
+        box-shadow: black 5px 5px 5px;
+        border-radius: 5px;
         .hidden{
             display: none;
         }
@@ -57,6 +60,9 @@ export default{
             img{
                 height: 50%;
             }
+        }
+        .back{
+            background: url('../assets/back.png');
         }
     }
     

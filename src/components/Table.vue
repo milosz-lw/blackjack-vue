@@ -1,7 +1,7 @@
 <template>
     <div id="table">
-        <Hand :cards="opponentHand"/>
-        <Hand :cards="playerHand"/>
+        <Hand :cards="opponentHand" which="opponent"/>
+        <Hand :cards="playerHand" which="player"/>
         <Playedtokens :tokens="playedTokens" :playedMoney="playedMoney"/>
     </div>
 </template>
