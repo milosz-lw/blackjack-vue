@@ -40,9 +40,12 @@ export default {
         this.playedTokens.push(token)
       }
     },
-    drawCard(hand){
+    drawCard(hand, show){
       setTimeout(() => {
         let randPos = this.getRandom(0, this.cards.length - 1)
+        if(show){
+          this.cards[randPos].hidden = false
+        }
         hand.push(this.cards[randPos])
         this.cards.splice(randPos, 1)
       }, 500)
@@ -54,10 +57,10 @@ export default {
     },
     deal(){
       this.game = true
-      this.drawCard(this.playerHand)
-      setTimeout(()=>{this.drawCard(this.opponentHand)}, 500)
-      setTimeout(()=>{this.drawCard(this.playerHand)}, 1000)
-      setTimeout(()=>{this.drawCard(this.opponentHand)}, 1500)
+      this.drawCard(this.playerHand, true)
+      setTimeout(()=>{this.drawCard(this.opponentHand, true)}, 500)
+      setTimeout(()=>{this.drawCard(this.playerHand, true)}, 1000)
+      setTimeout(()=>{this.drawCard(this.opponentHand, false)}, 1500)
     }
   }
 }

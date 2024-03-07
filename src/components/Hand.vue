@@ -1,12 +1,12 @@
 <template>
     <div class="hand">
         <div v-for="card in cards">
-            <div class="front">
+            <div class="front" v-if="!card.hidden">
                 <p>{{ card.num }}</p>
                 <img :src="require('../assets/' + card.suit + '.png')">
                 <p style="text-align: right;">{{ card.num }}</p>
             </div>
-            <div class="back">
+            <div class="back" v-else>
             </div>
         </div>
     </div>
@@ -63,6 +63,9 @@ export default{
         }
         .back{
             background: url('../assets/back.png');
+            background-size: contain;
+            width: 100%;
+            height: 100%;
         }
     }
     
