@@ -1,7 +1,7 @@
 <template>
   <Moneybox :money="money"/>
   <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :playerHand="playerHand" :opponentHand="opponentHand"/>
-  <Menu :playedMoney="playedMoney" :optionsShown="optionsShown" :game="game" @clear="clear" @deal="deal" @addToken="addToken" @hit="drawCard(this.playerHand, true)"/>
+  <Menu :playedMoney="playedMoney" :optionsShown="optionsShown" :game="game" @clear="clear" @deal="deal" @addToken="addToken" @hit="drawCard(this.playerHand, true)" @stand="stand"/>
 </template>
 
 <script>
@@ -47,7 +47,11 @@ export default {
         this.cards[randPos].hidden = false
       }
       hand.push(this.cards[randPos])
-      this.cards.splice(randPos, 1)
+      if(this.cards[randPos].left>0){
+        this.cards[randPos].left--
+      } else {
+        this.cards.splice(randPos, 1)
+      }
     },
     clear(){
       this.money += this.playedMoney
@@ -61,6 +65,11 @@ export default {
       setTimeout(()=>{this.drawCard(this.playerHand, true)}, 1000)
       setTimeout(()=>{this.drawCard(this.opponentHand, false)}, 1500)
       setTimeout(()=>{this.optionsShown = true}, 2000)
+    },
+    stand(){
+      this.opponentHand.forEach((card)=>{
+        card.hidden = false
+      })
     }
   }
 }
