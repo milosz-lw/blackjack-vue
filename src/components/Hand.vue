@@ -10,16 +10,17 @@
             </div>
         </div>
     </div>
+    <p>{{ score }}</p>
 </template>
 
 <script>
 export default{
     name: 'Hand',
-    props: ['cards']
+    props: ['cards', 'score']
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes cardAppear {
     0% {
         opacity: 0;
