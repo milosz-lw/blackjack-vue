@@ -48,13 +48,19 @@ export default {
         this.playedTokens.push(token)
       }
     },
+    win(which){
+      console.log(which)
+    },
+    lose(which){
+      console.log(which)
+    },
     drawCard(which, show){
       let randPos = this.getRandom(0, this.cards.length - 1)
       let addScore
       if (Number.isInteger(this.cards[randPos].num)){
         addScore = this.cards[randPos].num
       } else if (this.cards[randPos].num === 'A'){
-          if (this.player.score > 10){
+          if (which.score > 10){
             addScore = 1
           } else {
             this.as = true
@@ -66,6 +72,12 @@ export default {
       if(show){
         this.cards[randPos].hidden = false
         which.score += addScore
+      }
+      if(which.score===21){
+        this.win(which)
+      }
+      if(which.score>21){
+        this.lose(which)
       }
       which.hand.push(this.cards[randPos])
       this.cards.splice(randPos, 1)
