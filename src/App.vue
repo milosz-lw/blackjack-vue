@@ -54,11 +54,7 @@ export default {
         which.score += this.cards[randPos].num
       }
       which.hand.push(this.cards[randPos])
-      if(this.cards[randPos].left>0){
-        this.cards[randPos].left--
-      } else {
-        this.cards.splice(randPos, 1)
-      }
+      this.cards.splice(randPos, 1)
     },
     clear(){
       this.money += this.playedMoney
