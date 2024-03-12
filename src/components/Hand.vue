@@ -11,9 +11,9 @@
                 </div>
             </div>
         </div>
-        <div id="score" v-if="score">
+        <div id="score" v-if="game">
             <p v-if="!as">
-                {{ score }} 
+                {{ score }}
             </p>
             <p v-else>
                 {{ `${score+1}/${score+10}` }}
@@ -25,7 +25,7 @@
 <script>
 export default{
     name: 'Hand',
-    props: ['cards', 'score']
+    props: ['cards', 'score', 'game']
 }
 </script>
 
