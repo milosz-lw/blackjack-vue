@@ -1,6 +1,6 @@
 <template>
   <Moneybox :money="money"/>
-  <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :player="player" :opponent="opponent"/>
+  <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :player="player" :opponent="opponent" :as="as"/>
   <Menu :playedMoney="playedMoney" :optionsShown="optionsShown" :game="game" @clear="clear" @deal="deal" @addToken="addToken" @hit="drawCard(this.player, true)" @stand="stand"/>
 </template>
 
@@ -24,6 +24,7 @@ export default {
       playedTokens: [],
       game: false,
       optionsShown: false,
+      as: false,
       player:{
         hand: [],
         score: 0
@@ -49,9 +50,22 @@ export default {
     },
     drawCard(which, show){
       let randPos = this.getRandom(0, this.cards.length - 1)
+      let addScore
+      if (Number.isInteger(this.cards[randPos].num)){
+        addScore = this.cards[randPos].num
+      } else if (this.cards[randPos].num === 'A'){
+          if (this.player.score > 10){
+            addScore = 1
+          } else {
+            this.as = true
+          }
+      } else {
+        addScore = 10
+      }
+      this.cards[randPos].num
       if(show){
         this.cards[randPos].hidden = false
-        which.score += this.cards[randPos].num
+        which.score += addScore
       }
       which.hand.push(this.cards[randPos])
       this.cards.splice(randPos, 1)
@@ -71,6 +85,7 @@ export default {
     },
     stand(){
       this.opponent.hand.forEach((card)=>{
+        if(card.hidden)
         card.hidden = false
       })
     }

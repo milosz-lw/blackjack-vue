@@ -1,16 +1,25 @@
 <template>
-    <div class="hand">
-        <div v-for="card in cards">
-            <div class="front" v-if="!card.hidden">
-                <p>{{ card.num }}</p>
-                <img :src="require('../assets/' + card.suit + '.png')">
-                <p style="text-align: right;">{{ card.num }}</p>
-            </div>
-            <div class="back" v-else>
+    <div id="hand-container">
+        <div class="hand">
+            <div v-for="card in cards">
+                <div class="front" v-if="!card.hidden">
+                    <p>{{ card.num }}</p>
+                    <img :src="require('../assets/' + card.suit + '.png')">
+                    <p style="text-align: right;">{{ card.num }}</p>
+                </div>
+                <div class="back" v-else>
+                </div>
             </div>
         </div>
+        <div id="score" v-if="score">
+            <p v-if="!as">
+                {{ score }} 
+            </p>
+            <p v-else>
+                {{ `${score+1}/${score+10}` }}
+            </p>
+        </div>
     </div>
-    <p>{{ score }}</p>
 </template>
 
 <script>
@@ -29,6 +38,15 @@ export default{
     100% {
         opacity: 1;
         transform: translateY(0) rotate(3deg);
+    }
+}
+
+#hand-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    #score{
+        color: white;
     }
 }
 
