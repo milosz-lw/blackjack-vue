@@ -1,6 +1,6 @@
 <template>
   <Moneybox :money="money"/>
-  <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :player="player" :opponent="opponent" :as="as" :game="game"/>
+  <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :player="player" :opponent="opponent" :game="game"/>
   <Menu :playedMoney="playedMoney" :optionsShown="optionsShown" :game="game" @clear="clear" @deal="deal" @addToken="addToken" @hit="drawCard(this.player, true)" @stand="stand"/>
 </template>
 
@@ -24,14 +24,15 @@ export default {
       playedTokens: [],
       game: false,
       optionsShown: false,
-      as: false,
       player:{
         hand: [],
-        score: 0
+        score: 0,
+        as: false
       },
       opponent:{
         hand: [],
-        score: 0
+        score: 0,
+        as: false
       }
     }
   },
@@ -48,6 +49,38 @@ export default {
         this.playedTokens.push(token)
       }
     },
+    updateScore(which, val){
+      console.log(val)
+      let addScore
+      if (Number.isInteger(val)){
+        addScore = val
+      } else if (val === 'A'){
+          if (which.score > 10){
+            addScore = 1
+            which.score += addScore
+          } else if (which.score === 10){
+            addScore = 11
+            which.score += addScore
+          } else {
+            which.as = true
+          }
+      } else {
+        addScore = 10
+      }
+      if(val !== 'A'){
+        which.score += addScore
+        if(which.as){
+          if(which.score > 10){
+            which.as = false
+            which.score = 1
+          } else if (which.score === 10){
+            which.as = false
+            which.score = 11
+          }
+        }
+      }
+      console.log(which.score)
+    },
     win(which){
       console.log(which)
     },
@@ -56,22 +89,11 @@ export default {
     },
     drawCard(which, show){
       let randPos = this.getRandom(0, this.cards.length - 1)
-      let addScore
-      if (Number.isInteger(this.cards[randPos].num)){
-        addScore = this.cards[randPos].num
-      } else if (this.cards[randPos].num === 'A'){
-          if (which.score > 10){
-            addScore = 1
-          } else {
-            this.as = true
-          }
-      } else {
-        addScore = 10
+      if(show){
+        this.updateScore(which, this.cards[randPos].num)
       }
-      this.cards[randPos].num
       if(show){
         this.cards[randPos].hidden = false
-        which.score += addScore
       }
       if(which.score===21){
         this.win(which)
@@ -99,6 +121,7 @@ export default {
       this.opponent.hand.forEach((card)=>{
         if(card.hidden)
         card.hidden = false
+        this.updateScore(this.opponent, card.num)
       })
     }
   }

@@ -25,7 +25,7 @@
 <script>
 export default{
     name: 'Hand',
-    props: ['cards', 'score', 'game']
+    props: ['cards', 'score', 'game', 'as']
 }
 </script>
 
