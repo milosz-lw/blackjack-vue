@@ -1,7 +1,7 @@
 <template>
     <div id="table">
-        <Hand :cards="opponentHand" which="opponent"/>
-        <Hand :cards="playerHand" which="player"/>
+        <Hand :cards="opponent.hand" which="opponent" :game="game" :score="opponent.score"/>
+        <Hand :cards="player.hand" :as="as" :game="game" which="player" :score="player.score"/>
         <Playedtokens :tokens="playedTokens" :playedMoney="playedMoney"/>
     </div>
 </template>
@@ -13,7 +13,7 @@ import Hand from './Hand.vue'
 export default{
     name: 'Table',
     components: { Playedtokens, Hand },
-    props: ['playedTokens', 'playedMoney', 'playerHand', 'opponentHand']
+    props: ['playedTokens', 'playedMoney', 'player', 'opponent', 'as', 'game']
 }
 </script>
 

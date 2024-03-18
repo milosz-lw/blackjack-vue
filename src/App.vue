@@ -1,7 +1,7 @@
 <template>
   <Moneybox :money="money"/>
-  <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :playerHand="playerHand" :opponentHand="opponentHand"/>
-  <Menu :playedMoney="playedMoney" :optionsShown="optionsShown" :game="game" @clear="clear" @deal="deal" @addToken="addToken" @hit="drawCard(this.playerHand, true)" @stand="stand"/>
+  <Table :playedTokens="playedTokens" :playedMoney="playedMoney" :player="player" :opponent="opponent" :as="as" :game="game"/>
+  <Menu :playedMoney="playedMoney" :optionsShown="optionsShown" :game="game" @clear="clear" @deal="deal" @addToken="addToken" @hit="drawCard(this.player, true)" @stand="stand"/>
 </template>
 
 <script>
@@ -24,8 +24,15 @@ export default {
       playedTokens: [],
       game: false,
       optionsShown: false,
-      playerHand: [],
-      opponentHand: []
+      as: false,
+      player:{
+        hand: [],
+        score: 0
+      },
+      opponent:{
+        hand: [],
+        score: 0
+      }
     }
   },
   methods:{
@@ -41,17 +48,39 @@ export default {
         this.playedTokens.push(token)
       }
     },
-    drawCard(hand, show){
+    win(which){
+      console.log(which)
+    },
+    lose(which){
+      console.log(which)
+    },
+    drawCard(which, show){
       let randPos = this.getRandom(0, this.cards.length - 1)
+      let addScore
+      if (Number.isInteger(this.cards[randPos].num)){
+        addScore = this.cards[randPos].num
+      } else if (this.cards[randPos].num === 'A'){
+          if (which.score > 10){
+            addScore = 1
+          } else {
+            this.as = true
+          }
+      } else {
+        addScore = 10
+      }
+      this.cards[randPos].num
       if(show){
         this.cards[randPos].hidden = false
+        which.score += addScore
       }
-      hand.push(this.cards[randPos])
-      if(this.cards[randPos].left>0){
-        this.cards[randPos].left--
-      } else {
-        this.cards.splice(randPos, 1)
+      if(which.score===21){
+        this.win(which)
       }
+      if(which.score>21){
+        this.lose(which)
+      }
+      which.hand.push(this.cards[randPos])
+      this.cards.splice(randPos, 1)
     },
     clear(){
       this.money += this.playedMoney
@@ -60,14 +89,15 @@ export default {
     },
     deal(){
       this.game = true
-      this.drawCard(this.playerHand, true)
-      setTimeout(()=>{this.drawCard(this.opponentHand, true)}, 500)
-      setTimeout(()=>{this.drawCard(this.playerHand, true)}, 1000)
-      setTimeout(()=>{this.drawCard(this.opponentHand, false)}, 1500)
+      this.drawCard(this.player, true)
+      setTimeout(()=>{this.drawCard(this.opponent, true)}, 500)
+      setTimeout(()=>{this.drawCard(this.player, true)}, 1000)
+      setTimeout(()=>{this.drawCard(this.opponent, false)}, 1500)
       setTimeout(()=>{this.optionsShown = true}, 2000)
     },
     stand(){
-      this.opponentHand.forEach((card)=>{
+      this.opponent.hand.forEach((card)=>{
+        if(card.hidden)
         card.hidden = false
       })
     }
