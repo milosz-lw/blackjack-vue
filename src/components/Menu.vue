@@ -1,15 +1,15 @@
 <template>
     <div id="menu">
+        <div class="buttons-container" v-if="optionsShown">
+            <button name="stand" @click="stand">Stand</button>
+            <button name="hit" @click="hit">Hit</button>
+        </div>
         <div id="tokens">
             <div v-for="token in tokens" :style="{background: token.color}" @click="addToken(token)">{{ token.value }}</div>
         </div>
         <div class="buttons-container" v-if="playedMoney && !game">
             <button name="clear" @click="clear">Clear</button>
             <button name="deal" @click="deal">Deal</button>
-        </div>
-        <div class="buttons-container" v-if="optionsShown">
-            <button name="stand" @click="stand">Stand</button>
-            <button name="hit" @click="hit">Hit</button>
         </div>
     </div>
 </template>
